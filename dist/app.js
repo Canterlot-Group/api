@@ -27,6 +27,8 @@ const bodyParser = __importStar(require("body-parser"));
 const morgan_1 = __importDefault(require("morgan"));
 const helmet_1 = __importDefault(require("helmet"));
 const cors_1 = __importDefault(require("cors"));
+const stream_1 = __importDefault(require("./stream"));
+const Lpr = new stream_1.default('Las Pegasus Radio', { isMirror: false }, { channels: 'stereo', bitrate: 192, sampleRate: 44.1 });
 const root_1 = __importDefault(require("./routes/root"));
 const app = express_1.default();
 app.use(cors_1.default());

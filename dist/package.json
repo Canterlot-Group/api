@@ -5,11 +5,11 @@
   "main": "dist/index.js",
   "scripts": {
     "prebuild": "rm -rf dist/* && tslint -c tslint.json -p tsconfig.json",
-    "build": "tsc --esModuleInterop && cp -rf package.json dist/package.json && cp -rf config dist/config",
+    "build": "tsc && cp -rf package.json dist/package.json && cp -rf config dist/config",
     "test-build": "tsc --noEmit && cp -rf package.json dist/package.json && cp -rf config dist/config",
     "prestart": "npm run build",
     "start": "ts-node .",
-    "test": "npm run test-dev",
+    "test": "mocha -r ts-node/register test/**/*.test.ts",
     "test-dev": "nodemon --watch . --ext ts --exec \"mocha -r ts-node/register test/**/*.test.ts\""
   },
   "repository": {
@@ -31,6 +31,7 @@
   "homepage": "https://github.com/Canterlot-Group/api#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "child_process": "^1.0.2",
     "config": "^3.3.2",
     "cors": "^2.8.5",
     "express": "^4.17.1",
