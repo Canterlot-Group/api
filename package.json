@@ -6,6 +6,7 @@
   "scripts": {
     "prebuild": "rm -rf dist/* && tslint -c tslint.json -p tsconfig.json",
     "build": "tsc --esModuleInterop && cp -rf package.json dist/package.json",
+    "test-build": "tsc --noEmit",
     "prestart": "npm run build",
     "start": "ts-node .",
     "test": "npm run test-dev",
