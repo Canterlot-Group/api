@@ -20,7 +20,7 @@ app.use(morgan('tiny'));
 app.use(rootRoute);
 
 app.use(bodyParser.json({
-  limit: '600mb', verify(req: any, res, buf, encoding) {
+  limit: '600mb', verify(req: any, res: any, buf: any) {
     req.rawBody = buf;
   }
 }));
