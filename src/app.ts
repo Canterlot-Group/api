@@ -6,6 +6,7 @@ import cors from 'cors';
 
 import Stream from './stream';
 import rootRoute from './routes/root';
+import Database from './database';
 
 const app = express();
 app.use(cors());
