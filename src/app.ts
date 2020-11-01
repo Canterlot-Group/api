@@ -6,7 +6,9 @@ import cors from 'cors';
 
 import Stream from './stream';
 import rootRoute from './routes/root';
-import Database from './database';
+import sequelize from './database';
+
+console.log(sequelize); // to make compiler think it is actually used, delete later.
 
 const app = express();
 app.use(cors());

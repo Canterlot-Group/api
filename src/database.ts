@@ -1,10 +1,14 @@
-import { Sequelize } from 'sequelize';
+import { Sequelize } from 'sequelize-typescript';
 import config from 'config';
 
-const db: { user: string,
-   pass: string, host: string,
-   port: number, name: string } = config.get('db');
-console.log(db);
+const host: string = config.get('db.host');
+const port: number = config.get('db.port');
 
-export default new Sequelize(
-  `postgres://${db.user}:${db.pass}@${db.host}:${db.port}/${db.name}`);
+const sequelize = new Sequelize(config.get('db.name'),
+  config.get('db.user'), config.get('db.pass'),
+  {host, port, dialect: 'postgres', models: [__dirname + '/models']});
+
+// disable on prod
+sequelize.sync({ force: true });
+
+export default sequelize;
