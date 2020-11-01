@@ -9,7 +9,7 @@
     "test-build": "tsc --noEmit && cp -rf package.json dist/package.json && cp -rf config dist/config",
     "prestart": "npm run build",
     "start": "ts-node .",
-    "test": "mocha -r ts-node/register test/**/*.test.ts",
+    "test": "mocha --exit -r ts-node/register test/**/*.test.ts",
     "test-dev": "nodemon --watch . --ext ts --exec \"mocha --exit -r ts-node/register test/**/*.test.ts\""
   },
   "repository": {
