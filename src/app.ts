@@ -5,11 +5,6 @@ import helmet from 'helmet';
 import cors from 'cors';
 
 import Stream from './stream';
-const Lpr = new Stream(
-  'Las Pegasus Radio', {isMirror: false},
-  {channels: 'stereo', bitrate: 192, sampleRate: 44.1}
-);
-
 import rootRoute from './routes/root';
 
 const app = express();
