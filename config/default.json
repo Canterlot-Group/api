@@ -1,5 +1,12 @@
 {
   "version": "0.4",
+  "db": {
+    "name": "yanghuan",
+    "host": "192.168.0.129",
+    "port": 5432,
+    "user": "yanghuan-api",
+    "pass": "1234"
+  },
   "http": {
     "ipAddress": "0.0.0.0",
     "port": 8123
