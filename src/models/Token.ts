@@ -1,4 +1,4 @@
-import {Table, Column, Model, CreatedAt, Scopes, BelongsTo} from 'sequelize-typescript';
+import {Table, Column, Model, CreatedAt, Scopes, BelongsTo, ForeignKey} from 'sequelize-typescript';
 import { User } from './User';
 
 interface TokenAttributes {
@@ -9,8 +9,7 @@ interface TokenAttributes {
 @Scopes(() => ({
   owner: {
     include: [{
-      model: User,
-      through: {attributes: ['id']}
+      model: User
     }]
   }
 }))
@@ -25,7 +24,10 @@ export class Token extends Model<Token, TokenAttributes> {
   @Column
   createdAt!: Date;
 
-  @BelongsTo(() => User, 'id')
-  owner: string;
+  @ForeignKey(() => User)
+  userId: string;
+
+  @BelongsTo(() => User)
+  owner: User;
 
 }

@@ -22,8 +22,7 @@ export interface UserAttributes {
 @Scopes(() => ({
   tokens: {
     include: [{
-      model: Token,
-      through: {attributes: ['id']}
+      model: Token
     }]
   },
   memberIn: {
@@ -80,11 +79,11 @@ export class User extends Model<User, UserAttributes> {
   @Column
   createdAt!: Date;
 
-  @HasMany(() => Token, 'id')
-  tokens: string[]
+  @HasMany(() => Token)
+  tokens: Token[];
 
   @BelongsToMany(() => Station, () => UserStation)
-  memberIn: Station[]
+  memberIn: Station[];
 
   @BeforeCreate
   static beforeCreateUser(user: any) {
