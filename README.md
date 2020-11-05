@@ -48,4 +48,4 @@ Soon
 Soon
 
 ---
-Made by, originally, [Las Pegasus Radio](https://www.google.com) team.
+Made by, originally, [Las Pegasus Radio](https://laspegas.us) team.
