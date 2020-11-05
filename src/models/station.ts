@@ -34,7 +34,7 @@ export default class Station extends Model<Account> {
   streamBitrate!: number;
 
   @IsInt
-  @Is('acceptable sample rate', val => [44100, 48000].includes(val));
+  @Is('acceptable sample rate', val => [44100, 48000].includes(val))
   @Column
   streamSampleRate!: number;
 
