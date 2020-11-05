@@ -16,6 +16,9 @@ export default class Account extends Model<Account> {
   @Column
   name!: string;
 
+  @Column
+  avatar?: Buffer | null;
+
   @IsEmail
   @Length({min: 6, max: 32})
   @Column
