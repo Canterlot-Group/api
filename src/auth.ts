@@ -5,7 +5,11 @@ import { User } from './models/User';
 const auth: Router = Router();
 auth.use((req: Request, res: Response, next: NextFunction) => {
 
-  if ( !['string', 'undefined'].includes(typeof req.header('X-User-Token')) )
+  if ( [null, undefined].includes(req.header('X-User-Token')) ) {
+    res.locals.accountType = 'anonymous';
+    return next();
+  }
+  else if ( typeof req.header('X-User-Token') !== 'string' )
     return res.status(403).json({ status: 'error', reason: 'Unauthenticated.' });
 
   const userToken: string = req.header('X-User-Token');
