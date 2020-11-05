@@ -1,7 +1,6 @@
-import {Table, Column, Model, Default, CreatedAt, BeforeCreate} from 'sequelize-typescript';
+import {Table, Column, Model, UpdatedAt, CreatedAt, BeforeCreate} from 'sequelize-typescript';
 import {IsUUID, Length, IsAlphanumeric, IsIn, IsInt, Is} from 'sequelize-typescript';
 import { v4 as uuidv4 } from 'uuid';
-import bcrypt from 'bcrypt';
 
 // Represents a media source/radio station/stream
 @Table
@@ -38,24 +37,18 @@ export default class Station extends Model<Account> {
   @Column
   streamSampleRate!: number;
 
-  @Default('regular')
-  @IsIn([['regular', 'member', 'administrator']])
-  @Column
-  accountType!: string;
-
   @CreatedAt
   @Column
   createdAt!: Date;
 
+  @UpdatedAt
+  @Column
+  updatedAt!: Date;
+
   @BeforeCreate
   static beforeCreateAccount(account: any) {
 
-    // Hash password
-    const salt = bcrypt.genSaltSync(12);
-    if (account.password)
-      account.password = bcrypt.hashSync(account.password, salt);
-
-    // Generate and set UUIDv4 as Account ID
+    // Generate and set UUIDv4 as Station ID
     account.id = uuidv4();
 
   }
