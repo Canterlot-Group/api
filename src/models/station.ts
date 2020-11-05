@@ -1,41 +1,42 @@
 import {Table, Column, Model, Default, CreatedAt, BeforeCreate} from 'sequelize-typescript';
-import {IsUUID, Length, IsAlphanumeric, IsEmail, IsIn} from 'sequelize-typescript';
+import {IsUUID, Length, IsAlphanumeric, IsIn, IsInt, Is} from 'sequelize-typescript';
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcrypt';
 
-// Represents a user
+// Represents a media source/radio station/stream
 @Table
-export default class Account extends Model<Account> {
+export default class Station extends Model<Account> {
 
   @IsUUID(4)
   @Column( {primaryKey: true} )
   id?: string;
 
   @IsAlphanumeric
-  @Length({min: 4, max: 16})
+  @Length({min: 2, max: 24})
   @Column
   name!: string;
 
-  @IsEmail
-  @Length({min: 6, max: 32})
+  @Length({min: 0, max: 1024})
   @Column
-  email!: string;
+  description!: string;
 
-  @Length({min: 6, max: 64})
   @Column
-  password!: string;
+  logo?: Buffer | null;
 
-  @Default(true)
+  @IsIn([['MP3', 'OGG', 'FLAC', 'OPUS']])
   @Column
-  loginEnabled!: boolean;
+  streamFormat!: string;
 
-  @Default(null)
+  @IsInt
+  @Is('acceptable bitrate', val =>
+    [64, 96, 128, 192, 220, 320].includes(val))
   @Column
-  bannedUntil?: Date | null; // date, or null if not banned
+  streamBitrate!: number;
 
-  @Default(null)
+  @IsInt
+  @Is('acceptable sample rate', val => [44100, 48000].includes(val));
   @Column
-  bannedReason?: string | null; // reason, or null if not banned
+  streamSampleRate!: number;
 
   @Default('regular')
   @IsIn([['regular', 'member', 'administrator']])
