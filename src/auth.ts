@@ -14,8 +14,12 @@ auth.use((req: Request, res: Response, next: NextFunction) => {
 
   const userToken: string = req.header('X-User-Token');
   Token.findByPk(userToken, {include: [User]}).then(token => {
+    if (token === null)
+      return res.status(403).json({ status: 'error', reason: 'Invalid token.' });
     res.locals.accountType = token.owner.accountType;
-    return token ? next() : res.status(403).json({ status: 'error', reason: 'Invalid token.' });
+    res.locals.accountName = token.owner.name;
+    res.locals.accountId   = token.owner.id;
+    return next();
   });
 
 });
