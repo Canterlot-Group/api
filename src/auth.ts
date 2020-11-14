@@ -2,8 +2,17 @@ import { Router, Request, Response, NextFunction } from 'express';
 import { Token } from './models/Token';
 import { User } from './models/User';
 
+const authenticationEnabled: boolean = !(process.env.YH_DISABLE_AUTH === 'yes');
+if (!authenticationEnabled)
+  console.info('Caution: Running with authentication disabled. Everyone has unlimited permissions.');
+
 const auth: Router = Router();
 auth.use((req: Request, res: Response, next: NextFunction) => {
+
+  if (!authenticationEnabled) {
+    res.locals.accountType = 'administrator';
+    return next();
+  }
 
   if ( [null, undefined].includes(req.header('X-User-Token')) ) {
     res.locals.accountType = 'anonymous';
