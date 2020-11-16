@@ -2,7 +2,7 @@
   "version": "0.4",
   "db": {
     "name": "yanghuan",
-    "host": "192.168.0.129",
+    "host": "172.17.0.3",
     "port": 5432,
     "user": "yanghuan-api",
     "pass": "1234"
@@ -12,5 +12,6 @@
     "port": 8123
   },
   "maxFileSize": "600mb",
-  "morganLogLevel": "tiny"
+  "morganLogLevel": "tiny",
+  "debugTokens": ["0000000000000000"]
 }

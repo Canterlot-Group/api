@@ -1,6 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { Token } from './models/Token';
 import { User } from './models/User';
+import config from 'config';
 
 const authenticationEnabled: boolean = !(process.env.YH_DISABLE_AUTH === 'yes');
 if (!authenticationEnabled)
@@ -9,8 +10,13 @@ if (!authenticationEnabled)
 const auth: Router = Router();
 auth.use((req: Request, res: Response, next: NextFunction) => {
 
-  if (!authenticationEnabled) {
+  const userToken: string = req.header('X-User-Token');
+  const debugTokens: string[] = config.get('debugTokens');
+
+  if (!authenticationEnabled || debugTokens.includes(userToken)) {
     res.locals.accountType = 'administrator';
+    res.locals.accountName = 'Server';
+    res.locals.accountId   = null;
     return next();
   }
 
@@ -21,7 +27,6 @@ auth.use((req: Request, res: Response, next: NextFunction) => {
   else if ( typeof req.header('X-User-Token') !== 'string' )
     return res.status(403).json({ status: 'error', reason: 'Unauthenticated.' });
 
-  const userToken: string = req.header('X-User-Token');
   Token.findByPk(userToken, {include: [User]}).then(token => {
     if (token === null)
       return res.status(403).json({ status: 'error', reason: 'Invalid token.' });
