@@ -16,6 +16,7 @@ try {
   process.exit(1);
 }
 
-sequelize.sync({ force: (process.env.YH_RESYNC === 'yes') });
+if (process.env.YH_RESYNC === 'yes')
+  sequelize.sync({ force: true });
 
 export default sequelize;
