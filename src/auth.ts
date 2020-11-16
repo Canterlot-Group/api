@@ -4,8 +4,13 @@ import { User } from './models/User';
 import config from 'config';
 
 const authenticationEnabled: boolean = !(process.env.YH_DISABLE_AUTH === 'yes');
+const debugTokensEnabled: boolean = (process.env.YH_DEBUG_TOKENS === 'yes');
+
 if (!authenticationEnabled)
   console.info('Caution: Running with authentication disabled. Everyone has unlimited permissions.');
+if (debugTokensEnabled)
+  console.info('Caution: Debug tokens enabled, everyone with such token has administrator access.');
+
 
 const auth: Router = Router();
 auth.use((req: Request, res: Response, next: NextFunction) => {
@@ -13,7 +18,7 @@ auth.use((req: Request, res: Response, next: NextFunction) => {
   const userToken: string = req.header('X-User-Token');
   const debugTokens: string[] = config.get('debugTokens');
 
-  if (!authenticationEnabled || debugTokens.includes(userToken)) {
+  if (!authenticationEnabled || (debugTokensEnabled && debugTokens.includes(userToken))) {
     res.locals.accountType = 'administrator';
     res.locals.accountName = 'Server';
     res.locals.accountId   = null;
