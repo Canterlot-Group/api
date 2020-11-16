@@ -4,8 +4,8 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
 
-import Stream from './stream';
-import sequelize from './database';
+// import Stream from './stream';
+import './database';
 import auth from './auth';
 import routes from './routes/';
 
