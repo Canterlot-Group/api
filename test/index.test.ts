@@ -1,11 +1,12 @@
 import {expect} from 'chai';
 import app from '../src/app';
 import {agent as request} from 'supertest';
+import sequelize from '../src/database';
 
 describe('Index Init Test', () => {
 
-  it('should always pass', () => {
-    expect(true).to.equal(true);
+  beforeEach(done => {
+    sequelize.sync({ force: false }).then(() => done());
   });
 
   it('should GET /', async () => {
