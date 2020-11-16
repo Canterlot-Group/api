@@ -2,7 +2,7 @@
   "version": "0.4",
   "db": {
     "name": "yanghuan",
-    "host": "172.17.0.3",
+    "host": "127.0.0.1",
     "port": 5432,
     "user": "yanghuan-api",
     "pass": "1234"
