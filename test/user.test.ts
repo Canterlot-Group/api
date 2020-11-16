@@ -1,6 +1,8 @@
-import {expect} from 'chai';
+import {expect, use} from 'chai';
 import app from '../src/app';
 import {agent as request} from 'supertest';
+import chaiUuid = require('chai-uuid');
+use(chaiUuid);
 
 describe('Users', () => {
 
@@ -21,6 +23,18 @@ describe('Users', () => {
     expect(res.body).to.be.an('object');
     expect(res.body.status).to.be.equal('error');
     expect(res.body.reason).to.be.equal('User by this ID does not exist.');
+  });
+
+  it('should successfully register a user', async () => {
+    const user: object = {name: 'userno1',
+      email: 'userno1@example.com', password: '123456789'};
+    const res = await request(app).post('/user').send(user).set('X-User-Token', '0000000000000000');
+    expect(res.status).to.equal(200);
+    expect(res.body).to.not.be.empty;
+    expect(res.body).to.be.an('object');
+    expect(res.body.status).to.be.equal('ok');
+    expect(res.body.message).to.be.equal('Created');
+    expect(res.body.userID).to.be.uuid('v4');
   });
 
 });

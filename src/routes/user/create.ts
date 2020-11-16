@@ -11,7 +11,7 @@ export default function (req: Request, res: Response) {
     if (!created)
       return res.status(400).json({ status: 'error', reason: 'User already exist.' });
     else
-      return res.status(200).json({ status: 'ok', message: 'Created', user });
+      return res.status(200).json({ status: 'ok', message: 'Created', userID: user.id });
   }).catch((error: ValidationErrorItem) =>
     res.status(400).json({ status: 'error', reason: error.message })
   );
