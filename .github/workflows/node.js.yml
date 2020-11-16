@@ -45,3 +45,5 @@ jobs:
       run: npm i -D
     - run: npm run test-build
     - run: npm test
+      env:
+        YH_DEBUG_TOKENS: yes
