@@ -1,7 +1,6 @@
 import {expect} from 'chai';
 import app from '../src/app';
 import {agent as request} from 'supertest';
-import {User} from '../src/models/User';
 
 describe('Users', () => {
 
