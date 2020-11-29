@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt';
 import { Token } from './Token';
 import { Station } from './Station';
 import { UserStation } from './UserStation';
+import { Session } from './Session';
 
 export interface UserAttributes {
   id?: string
@@ -29,6 +30,11 @@ export interface UserAttributes {
     include: [{
       model: Station,
       through: {attributes: ['id']}
+    }]
+  },
+  activeSessions: {
+    include: [{
+      model: Session
     }]
   }
 }))
@@ -84,6 +90,9 @@ export class User extends Model<User, UserAttributes> {
 
   @BelongsToMany(() => Station, () => UserStation)
   memberIn: Station[];
+
+  @HasMany(() => Session)
+  activeSessions: Session[];
 
   @BeforeCreate
   static beforeCreateUser(user: any) {
