@@ -2,6 +2,18 @@ import { Request, Response } from 'express';
 import { User } from './../../models/User';
 import { ValidationErrorItem } from 'sequelize';
 
+/*
+ * POST - JSON
+ * {
+ *    "name":     string(min: 4, max: 16, alphanumeric),
+ *    "email":    string(min: 6, max: 32, is email),
+ *    "password": string(min: 6, max: 64),
+ *
+ *    "loginEnabled": boolean(optional),
+ *    "accountType": string(optional, one of ["regular", "member", "administrator"])
+ * }
+ */
+
 export default function (req: Request, res: Response) {
 
   if (res.locals.accountType !== 'administrator')

@@ -2,6 +2,10 @@ import { Request, Response } from 'express';
 import { User } from './../../models/User';
 import { Station } from './../../models/Station';
 
+/*
+ * GET :id
+ */
+
 export default function (req: Request, res: Response) {
 
   if (req.params.id !== res.locals.accountId && !['member', 'administrator'].includes(res.locals.accountType))
